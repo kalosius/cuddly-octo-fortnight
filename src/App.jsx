@@ -225,7 +225,20 @@ const App = () => {
     setShowIntro(false);
     triggerFireworks();
     if (audioRef.current) {
-      audioRef.current.play().catch(e => console.log("Autoplay blocked:", e));
+      audioRef.current.currentTime = 2;
+      audioRef.current.volume = 0;
+      audioRef.current.play().then(() => {
+        let vol = 0;
+        const fadeInterval = setInterval(() => {
+          if (vol < 1) {
+            vol += 0.01;
+            if (vol > 1) vol = 1;
+            audioRef.current.volume = vol;
+          } else {
+            clearInterval(fadeInterval);
+          }
+        }, 80);
+      }).catch(e => console.log("Autoplay blocked:", e));
       setIsPlaying(true);
     }
   };
@@ -233,9 +246,30 @@ const App = () => {
   const toggleMusic = () => {
     if (audioRef.current) {
       if (isPlaying) {
-        audioRef.current.pause();
+        let vol = audioRef.current.volume;
+        const fadeOut = setInterval(() => {
+          if (vol > 0) {
+            vol -= 0.1;
+            if (vol < 0) vol = 0;
+            audioRef.current.volume = vol;
+          } else {
+            clearInterval(fadeOut);
+            audioRef.current.pause();
+          }
+        }, 50);
       } else {
+        audioRef.current.volume = 0;
         audioRef.current.play();
+        let vol = 0;
+        const fadeIn = setInterval(() => {
+          if (vol < 1) {
+            vol += 0.1;
+            if (vol > 1) vol = 1;
+            audioRef.current.volume = vol;
+          } else {
+            clearInterval(fadeIn);
+          }
+        }, 50);
       }
       setIsPlaying(!isPlaying);
     }
