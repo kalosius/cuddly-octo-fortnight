@@ -34,11 +34,41 @@ const FloatingElements = () => {
   );
 };
 
+const TypewriterText = ({ text, delay = 0, speed = 0.05 }) => {
+  const characters = text.split("");
+  return (
+    <motion.span>
+      {characters.map((char, index) => (
+        <motion.span
+          key={index}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{
+            duration: 0.1,
+            delay: delay + index * speed,
+          }}
+        >
+          {char}
+        </motion.span>
+      ))}
+    </motion.span>
+  );
+};
+
 const App = () => {
   const [showIntro, setShowIntro] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showSurprise, setShowSurprise] = useState(false);
   const [daysTogether, setDaysTogether] = useState(0);
+
+  const captions = [
+    "Your smile lights up my world ✨",
+    "Pure happiness in a single frame 💖",
+    "The most beautiful person I know ❤️",
+    "Every moment with you is a treasure 💎",
+    "Forever falling for you 🌹"
+  ];
 
   useEffect(() => {
     const anniversary = new Date("2026-02-07");
@@ -46,16 +76,44 @@ const App = () => {
     setDaysTogether(Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1);
   }, []);
 
+  useEffect(() => {
+    if (!showIntro) {
+      const interval = setInterval(() => {
+        triggerFireworks();
+      }, 15000);
+      return () => clearInterval(interval);
+    }
+  }, [showIntro]);
+
   const triggerFireworks = () => {
-    const duration = 5 * 1000;
-    const animationEnd = Date.now() + duration;
-    const interval = setInterval(() => {
-      const timeLeft = animationEnd - Date.now();
-      if (timeLeft <= 0) return clearInterval(interval);
-      const particleCount = 50 * (timeLeft / duration);
-      confetti({ particleCount, origin: { x: Math.random() * 0.2 + 0.1, y: Math.random() - 0.2 } });
-      confetti({ particleCount, origin: { x: Math.random() * 0.2 + 0.7, y: Math.random() - 0.2 } });
-    }, 250);
+    const styles = [
+      // Style 1: Burst from bottom corners
+      () => {
+        const duration = 3 * 1000;
+        const end = Date.now() + duration;
+        (function frame() {
+          confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0, y: 0.8 }, colors: ["#db2777", "#f472b6"] });
+          confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1, y: 0.8 }, colors: ["#db2777", "#fbcfe8"] });
+          if (Date.now() < end) requestAnimationFrame(frame);
+        }());
+      },
+      // Style 2: Random center bursts
+      () => {
+        confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ["#db2777", "#ffffff", "#f9a8d4"], scalar: 1.2 });
+      },
+      // Style 3: Shower from top
+      () => {
+        const duration = 3 * 1000;
+        const end = Date.now() + duration;
+        (function frame() {
+          confetti({ particleCount: 2, angle: 270, spread: 360, origin: { x: Math.random(), y: -0.2 }, ticks: 200, colors: ["#db2777", "#fce7f3"] });
+          if (Date.now() < end) requestAnimationFrame(frame);
+        }());
+      }
+    ];
+
+    const randomStyle = styles[Math.floor(Math.random() * styles.length)];
+    randomStyle();
   };
 
   const handleStart = () => {
@@ -82,7 +140,9 @@ const App = () => {
               <div style={{ position: "absolute", inset: 0, backgroundColor: "rgba(219, 39, 119, 0.2)", borderRadius: "9999px", filter: "blur(48px)" }}></div>
               <Heart size={120} style={{ color: "#db2777" }} fill="currentColor" />
             </motion.div>
-            <h1 style={{ fontSize: "3rem", fontWeight: "bold", color: "#db2777", marginTop: "2rem" }}>For You, My Love</h1>
+            <h1 style={{ fontSize: "3rem", fontWeight: "bold", color: "#db2777", marginTop: "2rem" }}>
+              <TypewriterText text="For You, Leticia" speed={0.1} />
+            </h1>
             <button
               onClick={handleStart}
               style={{ marginTop: "3rem", padding: "0.75rem 2rem", backgroundColor: "#db2777", borderRadius: "9999px", fontWeight: "bold", border: "none", color: "white", cursor: "pointer" }}
@@ -96,11 +156,17 @@ const App = () => {
         <main style={{ position: "relative", zIndex: 10, width: "100%", maxWidth: "64rem", margin: "0 auto", padding: "5rem 1rem" }}>
           <section style={{ textAlign: "center", marginBottom: "8rem" }}>
             <Sparkles style={{ color: "#f472b6", margin: "0 auto 1.5rem" }} size={40} />
-            <h1 style={{ fontSize: "5rem", color: "#f9a8d4", fontStyle: "italic" }}>Happy Birthday <br /> My Love</h1>
-            <p style={{ fontSize: "1.5rem", color: "rgba(249, 168, 212, 0.8)", margin: "1rem auto 0" }}>Today the world celebrates the most beautiful soul in my life.</p>
+            <h1 style={{ fontSize: "5rem", color: "#f9a8d4", fontStyle: "italic" }}>
+              <TypewriterText text="Happy Birthday Leticia" delay={0.5} />
+            </h1>
+            <p style={{ fontSize: "1.5rem", color: "rgba(249, 168, 212, 0.8)", margin: "1rem auto 0" }}>
+              <TypewriterText text="Today the world celebrates the most beautiful soul in my life." delay={2} speed={0.03} />
+            </p>
           </section>
           <section style={{ marginBottom: "8rem" }}>
-            <h2 style={{ fontSize: "3rem", textAlign: "center", marginBottom: "4rem", color: "#f9a8d4", fontStyle: "italic" }}>Our Memories</h2>
+            <h2 style={{ fontSize: "3rem", textAlign: "center", marginBottom: "4rem", color: "#f9a8d4", fontStyle: "italic" }}>
+              <TypewriterText text="Leticia's Beautiful Moments" />
+            </h2>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "2rem" }}>
               {[img1, img2, img3, img4, img5].map((img, i) => (
                 <motion.div
@@ -115,16 +181,18 @@ const App = () => {
                   <div style={{ aspectRatio: "4/5", backgroundColor: "#fbcfe8", overflow: "hidden", position: "relative" }}>
                     <img src={img} alt={`Memory ${i + 1}`} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                   </div>
-                  <p style={{ color: "#831843", textAlign: "center", marginTop: "1.5rem", fontStyle: "italic", fontWeight: "bold" }}>A Beautiful Day ❤️</p>
+                  <p style={{ color: "#831843", textAlign: "center", marginTop: "1.5rem", fontStyle: "italic", fontWeight: "bold" }}>
+                    <TypewriterText text={captions[i]} speed={0.08} />
+                  </p>
                 </motion.div>
               ))}
             </div>
           </section>
           <section style={{ marginBottom: "8rem", textAlign: "center", padding: "4rem 2rem", background: "rgba(131, 24, 67, 0.3)", borderRadius: "3rem", border: "1px solid rgba(219, 39, 119, 0.3)" }}>
              <p style={{ fontSize: "1.5rem", fontStyle: "italic", lineHeight: "1.6" }}>
-                "Happy Birthday my love ❤️<br />
-                You make my world brighter, my days happier, and my life more beautiful.<br />
-                I love you more than words can ever explain."
+                "<TypewriterText text="Happy Birthday Leticia ❤️" speed={0.07} /><br />
+                <TypewriterText text="You make my world brighter, my days happier, and my life more beautiful." delay={2} speed={0.04} /><br />
+                <TypewriterText text="I love you more than words can ever explain." delay={5} speed={0.04} />"
               </p>
           </section>
           <section style={{ marginBottom: "8rem", textAlign: "center" }}>
@@ -138,7 +206,9 @@ const App = () => {
               <div style={{ fontSize: "4.5rem", fontWeight: "bold", color: "#db2777" }}>
                 {daysTogether}
               </div>
-              <p style={{ color: "#f9a8d4", marginTop: "0.5rem", fontSize: "1.25rem", fontWeight: "300", fontStyle: "italic" }}>Days of sharing love together ❤️</p>
+              <p style={{ color: "#f9a8d4", marginTop: "0.5rem", fontSize: "1.25rem", fontWeight: "300", fontStyle: "italic" }}>
+                <TypewriterText text="Days of sharing love together ❤️" speed={0.06} />
+              </p>
             </motion.div>
           </section>
           <section style={{ textAlign: "center", paddingBottom: "10rem" }}>
@@ -154,7 +224,7 @@ const App = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 style={{ marginTop: "3rem", fontSize: "1.8rem", fontStyle: "italic", color: "#fbcfe8" }}
               >
-                "Every moment with you is a gift! Happy Birthday!"
+                "<TypewriterText text="Every moment with you is a gift! Happy Birthday!" speed={0.06} />"
               </motion.div>
             )}
           </section>
