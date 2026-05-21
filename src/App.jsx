@@ -9,6 +9,14 @@ import img3 from "./assets/leticia/leticiathree.jpg";
 import img4 from "./assets/leticia/leticiafour.jpg";
 import img5 from "./assets/leticia/leticiafive.jpg";
 
+import vid1 from "./assets/leticia/VID-leticiaone.mp4";
+import vid2 from "./assets/leticia/VID-leticiatwo.mp4";
+import vid3 from "./assets/leticia/VID-leticiathree.mp4";
+import vid4 from "./assets/leticia/VID-leticiafour.mp4";
+import vid5 from "./assets/leticia/VID-leticiafive.mp4";
+import vid6 from "./assets/leticia/VID-leticiasix.mp4";
+import vid7 from "./assets/leticia/VID-leticiaseven.mp4";
+
 const FloatingElements = () => {
   const [elements, setElements] = useState([]);
   useEffect(() => {
@@ -184,6 +192,35 @@ const App = () => {
                   <p style={{ color: "#831843", textAlign: "center", marginTop: "1.5rem", fontStyle: "italic", fontWeight: "bold" }}>
                     <TypewriterText text={captions[i]} speed={0.08} />
                   </p>
+                </motion.div>
+              ))}
+            </div>
+          </section>
+
+          <section style={{ marginBottom: "8rem" }}>
+            <h2 style={{ fontSize: "3rem", textAlign: "center", marginBottom: "4rem", color: "#f9a8d4", fontStyle: "italic" }}>
+              <TypewriterText text="Captured in Motion" />
+            </h2>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "2rem" }}>
+              {[vid1, vid2, vid3, vid4, vid5, vid6, vid7].map((vid, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  style={{ borderRadius: "1.5rem", overflow: "hidden", backgroundColor: "rgba(255, 255, 255, 0.05)", border: "1px solid rgba(219, 39, 119, 0.2)", position: "relative" }}
+                >
+                  <video
+                    src={vid}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    style={{ width: "100%", aspectRatio: "9/16", objectFit: "cover" }}
+                  />
+                  <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "1rem", background: "linear-gradient(transparent, rgba(0,0,0,0.8))" }}>
+                    <p style={{ color: "white", fontSize: "0.9rem", fontStyle: "italic" }}>Moment {i + 1}</p>
+                  </div>
                 </motion.div>
               ))}
             </div>
