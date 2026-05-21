@@ -540,30 +540,6 @@ const App = () => {
                 "<TypewriterText text="Every moment with you is a gift! Happy Birthday!" speed={0.06} />"
               </motion.div>
             )}
-            
-            <div style={{ marginTop: "4rem" }}>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setShowWishModal(true)}
-                style={{
-                  padding: "1rem 2.5rem",
-                  backgroundColor: "transparent",
-                  border: "2px solid #db2777",
-                  borderRadius: "9999px",
-                  color: "#f472b6",
-                  fontWeight: "bold",
-                  fontSize: "1.2rem",
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.5rem",
-                  margin: "0 auto"
-                }}
-              >
-                Make a Wish ✨
-              </motion.button>
-            </div>
           </section>
 
           {/* New Interactive Birthday Cake Section */}
@@ -583,6 +559,33 @@ const App = () => {
               setTimeout(triggerFireworks, 500);
               setTimeout(triggerFireworks, 1000);
             }} />
+          </section>
+
+          <section id="wish-section" style={{ paddingBottom: "10rem", textAlign: "center" }}>
+            <h2 style={{ fontSize: "2.5rem", marginBottom: "3rem", color: "#f9a8d4", fontStyle: "italic" }}>
+              <TypewriterText text="Ready to Dream?" />
+            </h2>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setShowWishModal(true)}
+              style={{
+                padding: "1rem 3rem",
+                backgroundColor: "transparent",
+                border: "2px solid #db2777",
+                borderRadius: "9999px",
+                color: "#f472b6",
+                fontWeight: "bold",
+                fontSize: "1.4rem",
+                cursor: "pointer",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                boxShadow: "0 0 15px rgba(219,39,119,0.3)"
+              }}
+            >
+              Make a Wish ✨
+            </motion.button>
           </section>
         </main>
       )}
