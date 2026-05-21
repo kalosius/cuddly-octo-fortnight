@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import { Heart, Camera, Calendar, Sparkles, Volume2, VolumeX } from "lucide-react";
@@ -16,6 +16,8 @@ import vid4 from "./assets/leticia/VID-leticiafour.mp4";
 import vid5 from "./assets/leticia/VID-leticiafive.mp4";
 import vid6 from "./assets/leticia/VID-leticiasix.mp4";
 import vid7 from "./assets/leticia/VID-leticiaseven.mp4";
+
+import birthdaySong from "./assets/birthdaysongs/HAPPY-BIRTHDAY-INSTRUMENTAL-Piano-_-Sax-_Media_ne1BjpeVj9c_009_128k.mp3";
 
 const FloatingElements = () => {
   const [elements, setElements] = useState([]);
@@ -69,6 +71,7 @@ const App = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [showSurprise, setShowSurprise] = useState(false);
   const [daysTogether, setDaysTogether] = useState(0);
+  const audioRef = useRef(null);
 
   const captions = [
     "Your smile lights up my world ✨",
@@ -137,11 +140,52 @@ const App = () => {
   const handleStart = () => {
     setShowIntro(false);
     triggerFireworks();
+    if (audioRef.current) {
+      audioRef.current.play().catch(e => console.log("Autoplay blocked:", e));
+      setIsPlaying(true);
+    }
+  };
+
+  const toggleMusic = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
   };
 
   return (
     <div style={{ minHeight: "100vh", backgroundColor: "#0d0208", color: "white", fontFamily: "serif", overflowX: "hidden" }}>
+      <audio ref={audioRef} src={birthdaySong} loop />
       <FloatingElements />
+
+      {!showIntro && (
+        <motion.button
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          onClick={toggleMusic}
+          style={{
+            position: "fixed",
+            bottom: "2rem",
+            right: "2rem",
+            zIndex: 100,
+            backgroundColor: "rgba(219, 39, 119, 0.5)",
+            border: "none",
+            borderRadius: "9999px",
+            padding: "1rem",
+            color: "white",
+            cursor: "pointer",
+            backdropFilter: "blur(8px)",
+            boxShadow: "0 0 15px rgba(219,39,119,0.3)"
+          }}
+        >
+          {isPlaying ? <Volume2 size={24} /> : <VolumeX size={24} />}
+        </motion.button>
+      )}
+
       <AnimatePresence>
         {showIntro && (
           <motion.div
@@ -241,7 +285,7 @@ const App = () => {
              <p style={{ fontSize: "1.5rem", fontStyle: "italic", lineHeight: "1.6" }}>
                 "<TypewriterText text="Happy Birthday Leticia ❤️" speed={0.07} /><br />
                 <TypewriterText text="You make my world brighter, my days happier, and my life more beautiful." delay={2} speed={0.04} /><br />
-                <TypewriterText text="I love you more than words can ever explain." delay={5} speed={0.04} />"
+                <TypewriterText text="I love you more over and over again" delay={5} speed={0.04} />"
               </p>
           </section>
           <section style={{ marginBottom: "8rem", textAlign: "center" }}>
