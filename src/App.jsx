@@ -3,6 +3,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import { Heart, Camera, Calendar, Sparkles, Volume2, VolumeX } from "lucide-react";
 
+import img1 from "./assets/leticia/leticiaone.jpg";
+import img2 from "./assets/leticia/leticiatwo.jpg";
+import img3 from "./assets/leticia/leticiathree.jpg";
+import img4 from "./assets/leticia/leticiafour.jpg";
+import img5 from "./assets/leticia/leticiafive.jpg";
+
 const FloatingElements = () => {
   const [elements, setElements] = useState([]);
   useEffect(() => {
@@ -81,7 +87,7 @@ const App = () => {
               onClick={handleStart}
               style={{ marginTop: "3rem", padding: "0.75rem 2rem", backgroundColor: "#db2777", borderRadius: "9999px", fontWeight: "bold", border: "none", color: "white", cursor: "pointer" }}
             >
-              Open Heart ??
+              Open Heart ❤️
             </button>
           </motion.div>
         )}
@@ -96,31 +102,61 @@ const App = () => {
           <section style={{ marginBottom: "8rem" }}>
             <h2 style={{ fontSize: "3rem", textAlign: "center", marginBottom: "4rem", color: "#f9a8d4", fontStyle: "italic" }}>Our Memories</h2>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "2rem" }}>
-              {[1, 2, 3].map((i) => (
-                <div key={i} style={{ backgroundColor: "white", padding: "1rem 1rem 3rem", position: "relative" }}>
-                  <div style={{ aspectRatio: "4/5", backgroundColor: "#fbcfe8", display: "flex", alignItems: "center", justifyContent: "center", color: "rgba(131, 24, 67, 0.2)" }}>
-                    <Camera size={48} />
+              {[img1, img2, img3, img4, img5].map((img, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  whileHover={{ y: -10, rotate: i % 2 === 0 ? 2 : -2 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                  style={{ backgroundColor: "white", padding: "1rem 1rem 3rem", position: "relative", boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.5)" }}
+                >
+                  <div style={{ aspectRatio: "4/5", backgroundColor: "#fbcfe8", overflow: "hidden", position: "relative" }}>
+                    <img src={img} alt={`Memory ${i + 1}`} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                   </div>
-                  <p style={{ color: "#831843", textAlign: "center", marginTop: "1.5rem", fontStyle: "italic" }}>A Beautiful Day ??</p>
-                </div>
+                  <p style={{ color: "#831843", textAlign: "center", marginTop: "1.5rem", fontStyle: "italic", fontWeight: "bold" }}>A Beautiful Day ❤️</p>
+                </motion.div>
               ))}
             </div>
           </section>
-          <section style={{ marginBottom: "8rem", textAlign: "center", padding: "4rem 2rem", background: "rgba(131, 24, 67, 0.3)", borderRadius: "3rem" }}>
-             <p style={{ fontSize: "1.5rem", fontStyle: "italic" }}>
-                "Happy Birthday my love ??<br />
+          <section style={{ marginBottom: "8rem", textAlign: "center", padding: "4rem 2rem", background: "rgba(131, 24, 67, 0.3)", borderRadius: "3rem", border: "1px solid rgba(219, 39, 119, 0.3)" }}>
+             <p style={{ fontSize: "1.5rem", fontStyle: "italic", lineHeight: "1.6" }}>
+                "Happy Birthday my love ❤️<br />
                 You make my world brighter, my days happier, and my life more beautiful.<br />
                 I love you more than words can ever explain."
               </p>
           </section>
+          <section style={{ marginBottom: "8rem", textAlign: "center" }}>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              style={{ display: "inline-block", padding: "2rem 3rem", backgroundColor: "rgba(255, 255, 255, 0.05)", borderRadius: "9999px", border: "1px solid rgba(219, 39, 119, 0.2)" }}
+            >
+              <Calendar style={{ color: "#f472b6", margin: "0 auto 1rem" }} size={32} />
+              <div style={{ fontSize: "4.5rem", fontWeight: "bold", color: "#db2777" }}>
+                {daysTogether}
+              </div>
+              <p style={{ color: "#f9a8d4", marginTop: "0.5rem", fontSize: "1.25rem", fontWeight: "300", fontStyle: "italic" }}>Days of sharing love together ❤️</p>
+            </motion.div>
+          </section>
           <section style={{ textAlign: "center", paddingBottom: "10rem" }}>
             <button
               onClick={() => { setShowSurprise(true); triggerFireworks(); }}
-              style={{ padding: "1.25rem 3rem", backgroundColor: "#db2777", borderRadius: "9999px", fontWeight: "bold", fontSize: "1.5rem", border: "none", color: "white", cursor: "pointer" }}
+              style={{ padding: "1.25rem 3rem", backgroundColor: "#db2777", borderRadius: "9999px", fontWeight: "bold", fontSize: "1.5rem", border: "none", color: "white", cursor: "pointer", boxShadow: "0 0 20px rgba(219,39,119,0.5)" }}
             >
-              Tap For A Surprise ??
+              Tap For A Surprise ❤️
             </button>
-            {showSurprise && <p style={{ marginTop: "3rem", fontSize: "1.5rem", fontStyle: "italic" }}>"Every moment with you is a gift! Happy Birthday!"</p>}
+            {showSurprise && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                style={{ marginTop: "3rem", fontSize: "1.8rem", fontStyle: "italic", color: "#fbcfe8" }}
+              >
+                "Every moment with you is a gift! Happy Birthday!"
+              </motion.div>
+            )}
           </section>
         </main>
       )}
