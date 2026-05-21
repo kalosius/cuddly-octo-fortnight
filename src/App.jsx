@@ -71,6 +71,9 @@ const App = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [showSurprise, setShowSurprise] = useState(false);
   const [daysTogether, setDaysTogether] = useState(0);
+  const [showWishModal, setShowWishModal] = useState(false);
+  const [wish, setWish] = useState("");
+  const [isWishSent, setIsWishSent] = useState(false);
   const audioRef = useRef(null);
 
   const captions = [
@@ -155,6 +158,22 @@ const App = () => {
       }
       setIsPlaying(!isPlaying);
     }
+  };
+
+  const handleSendWish = (e) => {
+    e.preventDefault();
+    if (!wish.trim()) return;
+    
+    const message = encodeURIComponent(`Leticia's Birthday Wish: ${wish}`);
+    const whatsappUrl = `https://wa.me/256704978132?text=${message}`;
+    
+    window.open(whatsappUrl, "_blank");
+    setIsWishSent(true);
+    setTimeout(() => {
+      setShowWishModal(false);
+      setIsWishSent(false);
+      setWish("");
+    }, 3000);
   };
 
   return (
@@ -320,9 +339,118 @@ const App = () => {
                 "<TypewriterText text="Every moment with you is a gift! Happy Birthday!" speed={0.06} />"
               </motion.div>
             )}
+            
+            <div style={{ marginTop: "4rem" }}>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setShowWishModal(true)}
+                style={{
+                  padding: "1rem 2.5rem",
+                  backgroundColor: "transparent",
+                  border: "2px solid #db2777",
+                  borderRadius: "9999px",
+                  color: "#f472b6",
+                  fontWeight: "bold",
+                  fontSize: "1.2rem",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  margin: "0 auto"
+                }}
+              >
+                Make a Wish ✨
+              </motion.button>
+            </div>
           </section>
         </main>
       )}
+
+      <AnimatePresence>
+        {showWishModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            style={{
+              position: "fixed",
+              inset: 0,
+              zIndex: 100,
+              backgroundColor: "rgba(0,0,0,0.9)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "1rem"
+            }}
+          >
+            <motion.div
+              initial={{ y: 50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 50, opacity: 0 }}
+              style={{
+                backgroundColor: "#1a0510",
+                padding: "2.5rem",
+                borderRadius: "2rem",
+                width: "100%",
+                maxWidth: "400px",
+                border: "1px solid #db2777",
+                textAlign: "center"
+              }}
+            >
+              {!isWishSent ? (
+                <>
+                  <h3 style={{ color: "#f9a8d4", fontSize: "1.8rem", marginBottom: "1.5rem", fontStyle: "italic" }}>What's your secret wish?</h3>
+                  <form onSubmit={handleSendWish}>
+                    <textarea
+                      value={wish}
+                      onChange={(e) => setWish(e.target.value)}
+                      placeholder="Write your birthday wish here..."
+                      style={{
+                        width: "100%",
+                        height: "120px",
+                        backgroundColor: "rgba(255,255,255,0.05)",
+                        border: "1px solid rgba(219,39,119,0.3)",
+                        borderRadius: "1rem",
+                        padding: "1rem",
+                        color: "white",
+                        fontSize: "1rem",
+                        marginBottom: "1.5rem",
+                        outline: "none",
+                        resize: "none"
+                      }}
+                    />
+                    <div style={{ display: "flex", gap: "1rem" }}>
+                      <button
+                        type="button"
+                        onClick={() => setShowWishModal(false)}
+                        style={{ flex: 1, padding: "0.75rem", borderRadius: "9999px", border: "1px solid #db2777", backgroundColor: "transparent", color: "#db2777", cursor: "pointer" }}
+                      >
+                        Close
+                      </button>
+                      <button
+                        type="submit"
+                        style={{ flex: 1, padding: "0.75rem", borderRadius: "9999px", backgroundColor: "#db2777", border: "none", color: "white", fontWeight: "bold", cursor: "pointer" }}
+                      >
+                        Send Wish ✨
+                      </button>
+                    </div>
+                  </form>
+                </>
+              ) : (
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                >
+                  <Sparkles style={{ color: "#db2777", marginBottom: "1rem" }} size={48} />
+                  <h3 style={{ color: "#f9a8d4", fontSize: "1.8rem", marginBottom: "1rem" }}>Wish Sent!</h3>
+                  <p style={{ color: "rgba(249, 168, 212, 0.8)" }}>Your wish has been sent to the universe (and WhatsApp) ❤️</p>
+                </motion.div>
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
