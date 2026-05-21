@@ -155,7 +155,52 @@ const App = () => {
   const [showWishModal, setShowWishModal] = useState(false);
   const [wish, setWish] = useState("");
   const [isWishSent, setIsWishSent] = useState(false);
+  const [isMediaReady, setIsMediaReady] = useState(false);
+  const [loadingProgress, setLoadingProgress] = useState(0);
   const audioRef = useRef(null);
+  
+  const allImages = [img1, img2, img3, img4, img5];
+  const allVideos = [vid1, vid2, vid3, vid4, vid5, vid6, vid7];
+
+  useEffect(() => {
+    // Artificial progress for effect
+    const timer = setInterval(() => {
+      setLoadingProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(timer);
+          return 100;
+        }
+        return prev + 1;
+      });
+    }, 100); // 10 seconds total (100 * 100ms)
+
+    // Preload Images
+    const imagePromises = allImages.map((src) => {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.src = src;
+        img.onload = resolve;
+        img.onerror = resolve; // Continue even if one fails
+      });
+    });
+
+    // Preload Videos (Basic pre-fetch hint)
+    const videoPromises = allVideos.map((src) => {
+      return new Promise((resolve) => {
+        const video = document.createElement("video");
+        video.src = src;
+        video.preload = "auto";
+        video.onloadeddata = resolve;
+        video.onerror = resolve;
+        // Timeout for video loading to not block forever
+        setTimeout(resolve, 3000);
+      });
+    });
+
+    Promise.all([...imagePromises, ...videoPromises]).then(() => {
+      setIsMediaReady(true);
+    });
+  }, []);
 
   const captions = [
     "Your smile lights up my world ✨",
@@ -330,8 +375,15 @@ const App = () => {
           >
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 1.5, repeat: Infinity, repeatType: "reverse" }}
+              animate={{ 
+                scale: loadingProgress === 100 ? [1, 1.2, 1] : [1, 1.05, 1],
+                opacity: 1 
+              }}
+              transition={{ 
+                duration: loadingProgress === 100 ? 0.8 : 2, 
+                repeat: Infinity, 
+                ease: "easeInOut" 
+              }}
               style={{ position: "relative", width: "16rem", height: "16rem", display: "flex", alignItems: "center", justifyContent: "center" }}
             >
               <div style={{ position: "absolute", inset: 0, backgroundColor: "rgba(219, 39, 119, 0.2)", borderRadius: "9999px", filter: "blur(48px)" }}></div>
@@ -340,11 +392,43 @@ const App = () => {
             <h1 style={{ fontSize: "3rem", fontWeight: "bold", color: "#db2777", marginTop: "2rem" }}>
               <TypewriterText text="For You, Leticia" speed={0.1} />
             </h1>
+
+            <div style={{ marginTop: "2rem", width: "20rem", textAlign: "center" }}>
+              <div style={{ height: "4px", width: "100%", backgroundColor: "rgba(219, 39, 119, 0.2)", borderRadius: "9999px", overflow: "hidden", position: "relative" }}>
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${loadingProgress}%` }}
+                  style={{ height: "100%", backgroundColor: "#db2777", boxShadow: "0 0 10px #db2777" }}
+                />
+              </div>
+              <p style={{ marginTop: "1rem", color: "#f9a8d4", fontSize: "0.9rem", fontStyle: "italic", height: "1.5rem" }}>
+                {loadingProgress < 30 ? "Gathering roses..." : 
+                 loadingProgress < 60 ? "Polishing memories..." : 
+                 loadingProgress < 90 ? "Adding sparkle..." : 
+                 "Your surprise is ready ✨"}
+              </p>
+              <p style={{ color: "#db2777", fontWeight: "bold", fontSize: "1.2rem", marginTop: "0.5rem" }}>
+                {loadingProgress}%
+              </p>
+            </div>
+
             <button
               onClick={handleStart}
-              style={{ marginTop: "3rem", padding: "0.75rem 2rem", backgroundColor: "#db2777", borderRadius: "9999px", fontWeight: "bold", border: "none", color: "white", cursor: "pointer" }}
+              disabled={loadingProgress < 100 || !isMediaReady}
+              style={{ 
+                marginTop: "2rem", 
+                padding: "0.75rem 3rem", 
+                backgroundColor: (loadingProgress === 100 && isMediaReady) ? "#db2777" : "rgba(219, 39, 119, 0.3)", 
+                borderRadius: "9999px", 
+                fontWeight: "bold", 
+                border: "none", 
+                color: "white", 
+                cursor: (loadingProgress === 100 && isMediaReady) ? "pointer" : "not-allowed",
+                transition: "all 0.5s",
+                boxShadow: (loadingProgress === 100 && isMediaReady) ? "0 0 20px rgba(219,39,119,0.5)" : "none"
+              }}
             >
-              Open Heart ❤️
+              {(loadingProgress === 100 && isMediaReady) ? "Open Heart ❤️" : "Preparing Your Day..."}
             </button>
           </motion.div>
         )}
@@ -405,6 +489,7 @@ const App = () => {
                     loop
                     muted
                     playsInline
+                    preload="auto"
                     style={{ width: "100%", aspectRatio: "9/16", objectFit: "cover" }}
                   />
                   <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "1rem", background: "linear-gradient(transparent, rgba(0,0,0,0.8))" }}>
