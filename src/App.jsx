@@ -78,6 +78,16 @@ const App = () => {
     "Forever falling for you 🌹"
   ];
 
+  const videoCaptions = [
+    "A moment frozen in time ✨",
+    "Your grace in every move 💃",
+    "That laugh I could listen to forever 💖",
+    "Pure elegance and soul 🌹",
+    "The magic of you 🪄",
+    "A glimpse into paradise 🏝️",
+    "My favorite adventure 🗺️"
+  ];
+
   useEffect(() => {
     const anniversary = new Date("2026-02-07");
     const diffTime = Math.abs(new Date() - anniversary);
@@ -219,7 +229,9 @@ const App = () => {
                     style={{ width: "100%", aspectRatio: "9/16", objectFit: "cover" }}
                   />
                   <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "1rem", background: "linear-gradient(transparent, rgba(0,0,0,0.8))" }}>
-                    <p style={{ color: "white", fontSize: "0.9rem", fontStyle: "italic" }}>Moment {i + 1}</p>
+                    <p style={{ color: "white", fontSize: "0.9rem", fontStyle: "italic" }}>
+                      <TypewriterText text={videoCaptions[i]} speed={0.08} />
+                    </p>
                   </div>
                 </motion.div>
               ))}
