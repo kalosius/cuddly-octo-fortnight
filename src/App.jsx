@@ -41,9 +41,9 @@ const App = () => {
   const [daysTogether, setDaysTogether] = useState(0);
 
   useEffect(() => {
-    const anniversary = new Date("2023-01-01");
+    const anniversary = new Date("2026-02-07");
     const diffTime = Math.abs(new Date() - anniversary);
-    setDaysTogether(Math.ceil(diffTime / (1000 * 60 * 60 * 24)));
+    setDaysTogether(Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1);
   }, []);
 
   const triggerFireworks = () => {
