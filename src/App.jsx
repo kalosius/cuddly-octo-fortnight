@@ -9,13 +9,7 @@ import img3 from "./assets/annie/annie4.jpeg";
 import img4 from "./assets/annie/annie6.jpeg";
 import img5 from "./assets/annie/WhatsApp Image 2026-05-24 at 21.37.57.jpeg";
 
-import vid1 from "./assets/annie/WhatsApp Video 2026-05-24 at 21.37.50.mp4";
-import vid2 from "./assets/annie/WhatsApp Video 2026-05-24 at 21.37.56.mp4";
-import vid3 from "./assets/annie/WhatsApp Video 2026-05-24 at 21.37.50.mp4";
-import vid4 from "./assets/annie/WhatsApp Video 2026-05-24 at 21.37.56.mp4";
-import vid5 from "./assets/annie/WhatsApp Video 2026-05-24 at 21.37.50.mp4";
-import vid6 from "./assets/annie/WhatsApp Video 2026-05-24 at 21.37.56.mp4";
-import vid7 from "./assets/annie/WhatsApp Video 2026-05-24 at 21.37.50.mp4";
+import vid1 from "./assets/annie/WhatsApp Video 2026-05-24 at 21.37.56.mp4";
 
 import birthdaySong from "./assets/birthdaysongs/HAPPY-BIRTHDAY-INSTRUMENTAL-Piano-_-Sax-_Media_ne1BjpeVj9c_009_128k.mp3";
 
@@ -160,7 +154,7 @@ const App = () => {
   const audioRef = useRef(null);
   
   const allImages = [img1, img2, img3, img4, img5];
-  const allVideos = [vid1, vid2, vid3, vid4, vid5, vid6, vid7];
+  const allVideos = [vid1];
 
   useEffect(() => {
     // Artificial progress for effect
@@ -211,13 +205,7 @@ const App = () => {
   ];
 
   const videoCaptions = [
-    "A moment frozen in time ✨",
-    "Your grace in every move 💃",
-    "That laugh I could listen to forever 💖",
-    "Pure elegance and soul 🌹",
-    "The magic of you 🪄",
-    "A glimpse into paradise 🏝️",
-    "My favorite adventure 🗺️"
+    "A moment frozen in time ✨"
   ];
 
   useEffect(() => {
@@ -474,14 +462,14 @@ const App = () => {
             <h2 style={{ fontSize: "3rem", textAlign: "center", marginBottom: "4rem", color: "#f9a8d4", fontStyle: "italic" }}>
               <TypewriterText text="Captured in Motion" />
             </h2>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "2rem" }}>
-              {[vid1, vid2, vid3, vid4, vid5, vid6, vid7].map((vid, i) => (
+            <div style={{ display: "flex", justifyContent: "center", gap: "2rem" }}>
+              {[vid1].map((vid, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  style={{ borderRadius: "1.5rem", overflow: "hidden", backgroundColor: "rgba(255, 255, 255, 0.05)", border: "1px solid rgba(219, 39, 119, 0.2)", position: "relative" }}
+                  style={{ borderRadius: "1.5rem", overflow: "hidden", backgroundColor: "rgba(255, 255, 255, 0.05)", border: "1px solid rgba(219, 39, 119, 0.2)", position: "relative", maxWidth: "400px", width: "100%" }}
                 >
                   <video
                     src={vid}
