@@ -3,19 +3,19 @@ import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import { Heart, Camera, Calendar, Sparkles, Volume2, VolumeX, Flower, Flower2, Gift, Star } from "lucide-react";
 
-import img1 from "./assets/leticia/leticiaone.jpg";
-import img2 from "./assets/leticia/leticiatwo.jpg";
-import img3 from "./assets/leticia/leticiathree.jpg";
-import img4 from "./assets/leticia/leticiafour.jpg";
-import img5 from "./assets/leticia/leticiafive.jpg";
+import img1 from "./assets/annie/annieone.jpeg";
+import img2 from "./assets/annie/annietwo.jpeg";
+import img3 from "./assets/annie/annie4.jpeg";
+import img4 from "./assets/annie/annie6.jpeg";
+import img5 from "./assets/annie/WhatsApp Image 2026-05-24 at 21.37.57.jpeg";
 
-import vid1 from "./assets/leticia/VID-leticiaone.mp4";
-import vid2 from "./assets/leticia/VID-leticiatwo.mp4";
-import vid3 from "./assets/leticia/VID-leticiathree.mp4";
-import vid4 from "./assets/leticia/VID-leticiafour.mp4";
-import vid5 from "./assets/leticia/VID-leticiafive.mp4";
-import vid6 from "./assets/leticia/VID-leticiasix.mp4";
-import vid7 from "./assets/leticia/VID-leticiaseven.mp4";
+import vid1 from "./assets/annie/WhatsApp Video 2026-05-24 at 21.37.50.mp4";
+import vid2 from "./assets/annie/WhatsApp Video 2026-05-24 at 21.37.56.mp4";
+import vid3 from "./assets/annie/WhatsApp Video 2026-05-24 at 21.37.50.mp4";
+import vid4 from "./assets/annie/WhatsApp Video 2026-05-24 at 21.37.56.mp4";
+import vid5 from "./assets/annie/WhatsApp Video 2026-05-24 at 21.37.50.mp4";
+import vid6 from "./assets/annie/WhatsApp Video 2026-05-24 at 21.37.56.mp4";
+import vid7 from "./assets/annie/WhatsApp Video 2026-05-24 at 21.37.50.mp4";
 
 import birthdaySong from "./assets/birthdaysongs/HAPPY-BIRTHDAY-INSTRUMENTAL-Piano-_-Sax-_Media_ne1BjpeVj9c_009_128k.mp3";
 
@@ -127,7 +127,7 @@ const GiftBox = ({ onOpen }) => {
                 </div>
                 <Heart size={40} style={{ color: "#db2777", marginBottom: "1rem" }} fill="currentColor" />
                 <p style={{ fontSize: "1.5rem", color: "#f9a8d4", fontStyle: "italic" }}>
-                  "You are my greatest gift, Leticia."
+                  "You are my greatest gift, Annie Hope."
                 </p>
                 <div style={{ display: "flex", justifyContent: "center", gap: "10px", marginTop: "1rem" }}>
                   <Flower size={30} style={{ color: "#f472b6" }} />
@@ -221,7 +221,7 @@ const App = () => {
   ];
 
   useEffect(() => {
-    const anniversary = new Date("2026-02-07");
+    const anniversary = new Date("2022-01-02");
     const diffTime = Math.abs(new Date() - anniversary);
     setDaysTogether(Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1);
   }, []);
@@ -324,7 +324,7 @@ const App = () => {
     e.preventDefault();
     if (!wish.trim()) return;
     
-    const message = encodeURIComponent(`Leticia's Birthday Wish: ${wish}`);
+    const message = encodeURIComponent(`Annie Hope's Birthday Wish: ${wish}`);
     const whatsappUrl = `https://wa.me/256704978132?text=${message}`;
     
     window.open(whatsappUrl, "_blank");
@@ -390,7 +390,7 @@ const App = () => {
               <Heart size={120} style={{ color: "#db2777" }} fill="currentColor" />
             </motion.div>
             <h1 style={{ fontSize: "3rem", fontWeight: "bold", color: "#db2777", marginTop: "2rem" }}>
-              <TypewriterText text="For You, Leticia" speed={0.1} />
+              <TypewriterText text="For You, Annie Hope" speed={0.1} />
             </h1>
 
             <div style={{ marginTop: "2rem", width: "20rem", textAlign: "center" }}>
@@ -438,7 +438,7 @@ const App = () => {
           <section style={{ textAlign: "center", marginBottom: "8rem" }}>
             <Sparkles style={{ color: "#f472b6", margin: "0 auto 1.5rem" }} size={40} />
             <h1 style={{ fontSize: "5rem", color: "#f9a8d4", fontStyle: "italic" }}>
-              <TypewriterText text="Happy Birthday Leticia" delay={0.5} />
+              <TypewriterText text="Happy Birthday Annie Hope" delay={0.5} />
             </h1>
             <p style={{ fontSize: "1.5rem", color: "rgba(249, 168, 212, 0.8)", margin: "1rem auto 0" }}>
               <TypewriterText text="Today the world celebrates the most beautiful soul in my life." delay={2} speed={0.03} />
@@ -446,7 +446,7 @@ const App = () => {
           </section>
           <section style={{ marginBottom: "8rem" }}>
             <h2 style={{ fontSize: "3rem", textAlign: "center", marginBottom: "4rem", color: "#f9a8d4", fontStyle: "italic" }}>
-              <TypewriterText text="Leticia's Beautiful Moments" />
+              <TypewriterText text="Annie Hope's Beautiful Moments" />
             </h2>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "2rem" }}>
               {[img1, img2, img3, img4, img5].map((img, i) => (
@@ -503,7 +503,7 @@ const App = () => {
           </section>
           <section style={{ marginBottom: "8rem", textAlign: "center", padding: "4rem 2rem", background: "rgba(131, 24, 67, 0.3)", borderRadius: "3rem", border: "1px solid rgba(219, 39, 119, 0.3)" }}>
              <p style={{ fontSize: "1.5rem", fontStyle: "italic", lineHeight: "1.6" }}>
-                "<TypewriterText text="Happy Birthday Leticia ❤️" speed={0.07} /><br />
+                "<TypewriterText text="Happy Birthday Annie Hope ❤️" speed={0.07} /><br />
                 <TypewriterText text="You make my world brighter, my days happier, and my life more beautiful." delay={2} speed={0.04} /><br />
                 <TypewriterText text="I love you more over and over again" delay={5} speed={0.04} />"
               </p>
