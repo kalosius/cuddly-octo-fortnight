@@ -10,6 +10,7 @@ import img4 from "./assets/annie/annie6.jpeg";
 import img5 from "./assets/annie/WhatsApp Image 2026-05-24 at 21.37.57.jpeg";
 
 import vid1 from "./assets/annie/WhatsApp Video 2026-05-24 at 21.37.56.mp4";
+import vid2 from "./assets/annie/videotwo.mp4";
 
 import birthdaySong from "./assets/birthdaysongs/HAPPY-BIRTHDAY-INSTRUMENTAL-Piano-_-Sax-_Media_ne1BjpeVj9c_009_128k.mp3";
 
@@ -154,7 +155,7 @@ const App = () => {
   const audioRef = useRef(null);
   
   const allImages = [img1, img2, img3, img4, img5];
-  const allVideos = [vid1];
+  const allVideos = [vid1, vid2];
 
   useEffect(() => {
     // Artificial progress for effect
@@ -205,7 +206,8 @@ const App = () => {
   ];
 
   const videoCaptions = [
-    "A moment frozen in time ✨"
+    "A moment frozen in time ✨",
+    "Captured in motion, forever ours ✨"
   ];
 
   useEffect(() => {
@@ -463,7 +465,7 @@ const App = () => {
               <TypewriterText text="Captured in Motion" />
             </h2>
             <div style={{ display: "flex", justifyContent: "center", gap: "2rem" }}>
-              {[vid1].map((vid, i) => (
+              {allVideos.map((vid, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, y: 20 }}
