@@ -117,7 +117,7 @@ const GiftBox = ({ onOpen }) => {
                 transition={{ delay: 0.3 }}
               >
                 <div style={{ fontSize: "4rem", fontWeight: "bold", color: "#db2777", marginBottom: "0.5rem", textShadow: "0 0 20px rgba(219,39,119,0.5)" }}>
-                  Sweet 23 ✨
+                  Sweet 21 ✨
                 </div>
                 <Heart size={40} style={{ color: "#db2777", marginBottom: "1rem" }} fill="currentColor" />
                 <p style={{ fontSize: "1.5rem", color: "#f9a8d4", fontStyle: "italic" }}>
